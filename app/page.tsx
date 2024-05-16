@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import { LP_GRID_ITEMS } from "lp-items";
-import { Button, Box, Container, Flex, Heading, Text, VStack, HStack, Link, Icon } from "@chakra-ui/react";
+import Header from "components/header"; // Import the Header component
+import { Button, Box, Container, Flex, Heading, Text, VStack, HStack, Icon } from "@chakra-ui/react";
 
 export const metadata: Metadata = {
   title: "Next.js Enterprise Boilerplate",
@@ -22,19 +23,7 @@ export const metadata: Metadata = {
 export default function Web() {
   return (
       <>
-        <Box as="header" bg="gray.800" color="white" p={4}>
-          <Container maxW="container.xl">
-            <Flex justify="space-between" align="center">
-              <Heading as="h1" size="lg">Enterprise Boilerplate</Heading>
-              <nav>
-                <HStack spacing={4}>
-                  <Link href="#home" _hover={{ textDecoration: "underline" }}>Home</Link>
-                  <Link href="#features" _hover={{ textDecoration: "underline" }}>Features</Link>
-                </HStack>
-              </nav>
-            </Flex>
-          </Container>
-        </Box>
+        <Header /> {/* Use the Header component */}
         <Box as="section" bg="white" _dark={{ bg: "gray.900" }} py={{ base: 8, lg: 16 }}>
           <Container maxW="container.xl" textAlign="center">
             <Box>
@@ -47,7 +36,7 @@ export default function Web() {
                 enjoyable development process.
               </Text>
               <HStack justify="center" spacing={4}>
-                <Button href="https://github.com/keepkey/keepkey-template" className="mr-3">
+                <Button href="https://github.com/Blazity/next-enterprise" className="mr-3">
                   Get started
                 </Button>
                 <Button href="https://vercel.com/new/git/external?repository-url=https://github.com/Blazity/next-enterprise" variant="outline">
@@ -64,7 +53,6 @@ export default function Web() {
                 {LP_GRID_ITEMS.map((singleItem) => (
                     <Box key={singleItem.title} textAlign="center" flex="1" maxW="sm" p={4}>
                       <Flex justify="center" align="center" mb={4} w={12} h={12} bg="primary.100" color="blue.700" rounded="full" p={1.5}>
-
                       </Flex>
                       <Heading as="h3" size="md" mb={2}>{singleItem.title}</Heading>
                       <Text color="gray.500" _dark={{ color: "gray.400" }}>{singleItem.description}</Text>
