@@ -1,6 +1,6 @@
 'use client';
 import { LP_GRID_ITEMS } from "lp-items";
-import Header from "components/header";
+import Header from "../components/Header";
 import { Button, Box, Container, Flex, Heading, Text, VStack, HStack } from "@chakra-ui/react";
 import { useOnStartApp } from "../utils/onStart";
 import { useState, useEffect } from 'react';
@@ -69,10 +69,10 @@ export default function App() {
                             Pioneer is a cryptocurrency sdk and UI Library.
                         </Text>
                         <HStack justify="center" spacing={4}>
-                            <Button href="https://pioneers.dev" className="mr-3">
+                            <Button>
                                 Get started
                             </Button>
-                            <Button href="https://vercel.com/new/git/external?repository-url=https://https://github.com/coinmastersguild/pioneer-template" variant="outline">
+                            <Button>
                                 Deploy Now
                             </Button>
                         </HStack>
@@ -82,7 +82,7 @@ export default function App() {
             <Box as="section" bg="white" _dark={{ bg: "gray.900" }} py={{ base: 8, sm: 16 }} px={{ lg: 6 }}>
                 <Container maxW="container.xl">
                     <VStack spacing={8} align="stretch" justify="center">
-                        <Flex wrap="wrap" justify="center" spacing={12}>
+                        <Flex wrap="wrap" justify="center">
                             {PIONEER_COMPONENTS.map((singleItem) => (
                                 <Box key={singleItem.key} textAlign="center" flex="1" maxW="sm" p={4}>
                                     {singleItem.component}
