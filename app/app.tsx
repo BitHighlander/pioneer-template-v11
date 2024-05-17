@@ -1,10 +1,10 @@
-'use client'
+'use client';
 import { LP_GRID_ITEMS } from "lp-items";
 import Header from "components/header";
-import { Button, Box, Container, Flex, Heading, Text, VStack, HStack, Icon } from "@chakra-ui/react";
+import { Button, Box, Container, Flex, Heading, Text, VStack, HStack } from "@chakra-ui/react";
 import { useOnStartApp } from "../utils/onStart";
 import { useState, useEffect } from 'react';
-import { usePioneer } from "@coinmasters/pioneer-react"
+import { usePioneer } from "@coinmasters/pioneer-react";
 import {
     Pioneer,
     Basic,
@@ -13,20 +13,48 @@ import {
     Assets,
     Asset,
     Amount,
-    Quote,
-    Quotes,
     Swap,
-    Track,
-    SignTransaction
 } from '@coinmasters/pioneer-lib';
 
 export default function App() {
     const onStartApp = useOnStartApp();
     const { state } = usePioneer();
+    const { app } = state;
+    const [selectedAsset, setSelectedAsset] = useState({ });
 
     useEffect(() => {
         onStartApp();
     }, []);
+
+    useEffect(() => {
+        if(app && app.assetContext) setSelectedAsset(app.assetContext)
+    }, [app, app?.assetContext]);
+
+    const onClose = () => {
+        //console.log("onClose")
+    };
+
+    const onSelect = (asset: any) => {
+        //console.log("onSelect: ", asset)
+    }
+
+    const onAcceptSign = (tx: any) => {
+        //console.log("onAcceptSign: ", tx)
+    }
+
+    const setInputAmount = (amount: any) => {
+        console.log("setInputAmount: ", amount)
+    }
+
+    const PIONEER_COMPONENTS = [
+        { key: 'basic', component: <Basic usePioneer={usePioneer}/> },
+        { key: 'asset', component: <Asset usePioneer={usePioneer} onClose={onClose} onSelect={onSelect} asset={selectedAsset}/> },
+        { key: 'amount', component: <Amount usePioneer={usePioneer} onClose={onClose} asset={selectedAsset} setInputAmount={setInputAmount} /> },
+        { key: 'assets', component: <Assets usePioneer={usePioneer} onClose={onClose} onSelect={onSelect} filters={{onlyOwned: false, noTokens: false, hasPubkey:true }}/> },
+        { key: 'transfer', component: <Transfer usePioneer={usePioneer}/> },
+        { key: 'portfolio', component: <Portfolio usePioneer={usePioneer}/> },
+        { key: 'swap', component: <Swap usePioneer={usePioneer}/> },
+    ];
 
     return (
         <>
@@ -35,16 +63,16 @@ export default function App() {
                 <Container maxW="container.xl" textAlign="center">
                     <Box>
                         <Heading as="h1" size="2xl" mb={4} fontWeight="extrabold" lineHeight="tight">
-                            Next.js Enterprise Boilerplate
+                            Pioneer Components LIB
                         </Heading>
                         <Text mb={6} fontSize={{ base: "lg", lg: "xl" }} color="gray.500" _dark={{ color: "gray.400" }}>
-
+                            Pioneer is a cryptocurrency sdk and UI Library.
                         </Text>
                         <HStack justify="center" spacing={4}>
-                            <Button href="https://github.com/Blazity/next-enterprise" className="mr-3">
+                            <Button href="https://pioneers.dev" className="mr-3">
                                 Get started
                             </Button>
-                            <Button href="https://vercel.com/new/git/external?repository-url=https://github.com/Blazity/next-enterprise" variant="outline">
+                            <Button href="https://vercel.com/new/git/external?repository-url=https://https://github.com/coinmastersguild/pioneer-template" variant="outline">
                                 Deploy Now
                             </Button>
                         </HStack>
@@ -55,12 +83,9 @@ export default function App() {
                 <Container maxW="container.xl">
                     <VStack spacing={8} align="stretch" justify="center">
                         <Flex wrap="wrap" justify="center" spacing={12}>
-                            {LP_GRID_ITEMS.map((singleItem) => (
-                                <Box key={singleItem.title} textAlign="center" flex="1" maxW="sm" p={4}>
-                                    <Flex justify="center" align="center" mb={4} w={12} h={12} bg="primary.100" color="blue.700" rounded="full" p={1.5}>
-                                    </Flex>
-                                    <Heading as="h3" size="md" mb={2}>{singleItem.title}</Heading>
-                                    <Text color="gray.500" _dark={{ color: "gray.400" }}>{singleItem.description}</Text>
+                            {PIONEER_COMPONENTS.map((singleItem) => (
+                                <Box key={singleItem.key} textAlign="center" flex="1" maxW="sm" p={4}>
+                                    {singleItem.component}
                                 </Box>
                             ))}
                         </Flex>
